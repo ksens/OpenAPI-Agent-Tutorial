@@ -24,7 +24,7 @@ Follow these steps to get your development environment ready:
 1. **Clone the Repository**:
    Obtain a local copy of the code by running:
    ```bash
-   git clone https://github.com/yourusername/conversational-agent-langchain.git
+   git clone https://github.com/techindicium/OpenAPI-Agent-Tutorial.git
    cd conversational-agent-langchain
    ```
 
