@@ -52,14 +52,14 @@ Follow these steps to get your development environment ready:
 **Run the Agent**:
 Start the interactive session where the agent is responsive to your queries about weather and Wikipedia summaries:
 ```bash
-python main.py
+python open_agent_API.py
 ```
 During the session, you can type queries and the agent will respond accordingly. Type 'exit' to terminate the session.
 
 ## Project Structure
 
 Here’s a breakdown of the key files and their roles:
-- **`main.py`**: The main script that initializes and runs the conversational agent.
+- **`open_agent_API.py`**: The main script that initializes and runs the conversational agent.
 - **`.env`**: A hidden file that securely stores environment variables like API keys.
 
 ## Detailed Implementation
