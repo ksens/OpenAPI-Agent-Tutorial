@@ -2,6 +2,8 @@
 
 Welcome to the GitHub repository for a conversational agent that utilizes LangChain to interact with APIs. This Python project demonstrates how to build a conversational agent capable of fetching weather data and summarizing Wikipedia articles, showcasing the integration of the OpenAPI specification within LangChain. 
 
+The open_agent_API.py file is to create a conversational chatbot within your local terminal, I recommend using this code for the tutorial. Once you complete that, feel free to take a look at and play around with API_agent_chatbot.py, which creates a visual panel chatbot on your local machine.
+
 When reading through this, I recommend attempting to implement these methods without looking at the code provided. If you want more context, please read the related blogpost before attempting to create this agent.
 
 If you have already done this and want more resources, take a look at this deeplearning.ai course: https://www.deeplearning.ai/short-courses/functions-tools-agents-langchain/ 
