@@ -1,105 +1,99 @@
 # Conversational API Agent with LangChain
 
-This repository contains a Python project that demonstrates how to build a conversational agent using LangChain to interact with APIs. The agent is capable of fetching current temperature data using the Open-Meteo API and retrieving summaries from Wikipedia.
+Welcome to the GitHub repository for a conversational agent that utilizes LangChain to interact with APIs. This Python project demonstrates how to build a conversational agent capable of fetching weather data and summarizing Wikipedia articles, showcasing the integration of the OpenAPI specification within LangChain. 
+
+When reading through this, I recommend attempting to implement these methods without looking at the code provided. If you want more context, please read the related blogpost before attempting to create this agent.
+
+If you have already done this and want more resources, take a look at this deeplearning.ai course: https://www.deeplearning.ai/short-courses/functions-tools-agents-langchain/ 
 
 ## Project Setup
 
 ### Prerequisites
 
-- Python 3.8+
-- pip
-- An OpenAI API key
+Before you start, ensure you have the following:
+- Python 3.8 or higher installed on your system.
+- `pip` for installing Python packages.
+- An active OpenAI API key for accessing their models.
 
 ### Installation
 
-1. **Clone the repository:**
+Follow these steps to get your development environment ready:
 
+1. **Clone the Repository**:
+   Obtain a local copy of the code by running:
    ```bash
    git clone https://github.com/yourusername/conversational-agent-langchain.git
    cd conversational-agent-langchain
    ```
 
-2. **Install dependencies:**
-
+2. **Install Dependencies**:
+   Install all necessary Python libraries to ensure the agent functions correctly:
    ```bash
    pip install openai requests pydantic wikipedia langchain-community dotenv
    ```
 
-3. **Environment Configuration:**
-
-   Create a `.env` file in the project root and add your OpenAI API key:
-
-   ```plaintext
-   OPENAI_API_KEY='your_openai_api_key_here'
-   ```
-
-   Load the environment variables:
-
-   ```python
-   from dotenv import load_dotenv
-   load_dotenv()
-   ```
+3. **Set Up Environment Variables**:
+   Configure essential credentials and settings:
+   - Create a `.env` file in the project's root directory.
+   - Add your OpenAI API key to this file:
+     ```plaintext
+     OPENAI_API_KEY='your_openai_api_key_here'
+     ```
+   - Use the `dotenv` package to load these settings into your application:
+     ```python
+     from dotenv import load_dotenv
+     load_dotenv()
+     ```
 
 ### Usage
 
-To run the agent, execute the main script:
-
+**Run the Agent**:
+Start the interactive session where the agent is responsive to your queries about weather and Wikipedia summaries:
 ```bash
 python main.py
 ```
-
-This will start an interactive session where you can ask the agent about current temperatures or to summarize Wikipedia articles.
+During the session, you can type queries and the agent will respond accordingly. Type 'exit' to terminate the session.
 
 ## Project Structure
 
-- `main.py`: Contains the main script to run the conversational agent.
-- `.env`: Stores configuration variables and API keys.
+Here’s a breakdown of the key files and their roles:
+- **`main.py`**: The main script that initializes and runs the conversational agent.
+- **`.env`**: A hidden file that securely stores environment variables like API keys.
 
-## Tools and Functions
+## Detailed Implementation
 
-### Defining Tools
+### Defining API Interaction Tools
 
-Tools are defined to perform specific API calls. Here's how they are set up:
+Tools are specialized functions designed to extend the agent's capabilities by performing API interactions:
 
-1. **Current Temperature Tool:**
-
-   Fetches the current temperature for specified coordinates using the Open-Meteo API.
+1. **Current Temperature Tool**:
+   - **Purpose**: Fetches real-time temperature data from the Open-Meteo API based on user-specified geographic coordinates.
+   - **Implementation Notes**: Utilizes the `requests` library to make HTTP requests and `pydantic` for input validation.
 
    ```python
-   from langchain.agents import tool
-   from pydantic import BaseModel, Field
-
-   class OpenMeteoInput(BaseModel):
-       latitude: float = Field(...)
-       longitude: float = Field(...)
-
    @tool(args_schema=OpenMeteoInput)
    def get_current_temperature(latitude: float, longitude: float) -> str:
-       # Implementation here
+       # Implementation with error handling and data extraction
    ```
 
-2. **Wikipedia Search Tool:**
-
-   Searches Wikipedia and provides summaries of the top articles related to the query.
+2. **Wikipedia Search Tool**:
+   - **Purpose**: Provides summaries of the top three Wikipedia articles related to a user's search query.
+   - **Implementation Notes**: Leverages the `wikipedia-api` library to search and summarize articles.
 
    ```python
    @tool
    def search_wikipedia(query: str) -> str:
-       # Implementation here
+       # Implementation that handles disambiguation and errors
    ```
 
 ### Running the Agent
 
-The agent uses a chain of operations including input parsing, tool execution, and response generation managed by LangChain's infrastructure.
+The agent operates through a chain of modules that manage the conversational flow:
+- **Prompt Template**: Structures how messages are processed and presented, using placeholders for dynamic interaction.
+- **Memory Management**: Uses `ConversationBufferMemory` to retain context of the conversation, crucial for maintaining a continuous and relevant dialogue.
+- **Agent Execution**: `AgentExecutor` oversees the orchestration of input processing, tool invocation, and response generation.
 
 ```python
-from langchain.prompts import ChatPromptTemplate, MessagesPlaceholder
-from langchain.memory import ConversationBufferMemory
-from langchain.agents import AgentExecutor
-
-# Set up the chat model and prompt template
-# Define the agent chain and executor
-# Interactive agent function to handle user inputs
+# Initialization and setup of the chat model, prompt templates, and agent chain
+# Example functions to handle interaction
 ```
-
-This README provides a clear guide on how to set up, run, and understand the project, ensuring that anyone checking the repository can get started with minimal setup and understand the architecture and functionality of the conversational agent. Adjust paths, URLs, and specific instructions according to your actual project structure and external API usage.
