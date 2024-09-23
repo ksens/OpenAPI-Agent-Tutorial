@@ -1,19 +1,18 @@
 import os
 import openai
 import param
-import panel as pn
 import requests
 import datetime
 import wikipedia
 from dotenv import load_dotenv, find_dotenv
-from langchain_community.chat_models import ChatOpenAI
+from langchain_openai import ChatOpenAI
 from langchain.prompts import ChatPromptTemplate, MessagesPlaceholder
 from langchain.memory import ConversationBufferMemory
 from langchain.agents import tool, AgentExecutor
 from langchain.agents.output_parsers import OpenAIFunctionsAgentOutputParser
 from langchain.schema.runnable import RunnablePassthrough
 from pydantic.v1 import BaseModel, Field
-from langchain.tools.render import format_tool_to_openai_function
+from langchain_core.utils.function_calling import convert_to_openai_function
 from langchain.schema.agent import AgentFinish
 from langchain.agents.format_scratchpad import format_to_openai_functions
 
@@ -75,7 +74,7 @@ def search_wikipedia(query: str) -> str:
 
 # Define tools and functions
 tools = [get_current_temperature, search_wikipedia]
-functions = [format_tool_to_openai_function(f) for f in tools]
+functions = [convert_to_openai_function(f) for f in tools]
 
 # Create a chat model
 model = ChatOpenAI(temperature=0).bind(functions=functions)
@@ -87,9 +86,6 @@ prompt = ChatPromptTemplate.from_messages([
     ("user", "{input}"),
     MessagesPlaceholder(variable_name="agent_scratchpad")
 ])
-
-# Create the agent chain
-chain = prompt | model | OpenAIFunctionsAgentOutputParser()
 
 # Function to run the agent
 def run_agent(user_input):
